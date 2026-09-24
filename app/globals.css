@@ -1,0 +1,203 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Lets the ambient glow cross-fade between hues (Chromium, Safari 16.4+, Firefox 128+). */
+@property --ambient-hue {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 258;
+}
+
+@layer base {
+  :root {
+    /* Melodify palette: plum-tinted night, violet -> pink -> saffron accent */
+    --background: 258 38% 7%;
+    --foreground: 255 60% 97%;
+    --card: 258 32% 10%;
+    --card-foreground: 255 60% 97%;
+    --popover: 258 34% 11%;
+    --popover-foreground: 255 60% 97%;
+    --primary: 258 100% 71%;
+    --primary-foreground: 258 45% 8%;
+    --secondary: 258 24% 17%;
+    --secondary-foreground: 255 60% 97%;
+    --muted: 258 26% 14%;
+    --muted-foreground: 255 16% 69%;
+    --accent: 258 30% 21%;
+    --accent-foreground: 255 60% 97%;
+    --destructive: 0 84% 62%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 258 22% 19%;
+    --input: 258 22% 24%;
+    --ring: 258 100% 76%;
+    --radius: 0.85rem;
+    --brand-2: 322 92% 66%;
+    --brand-3: 36 100% 62%;
+    --ambient-hue: 258;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    color-scheme: dark;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-background font-sans text-foreground antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.35);
+  }
+}
+
+@layer utilities {
+  .bg-brand-gradient {
+    background-image: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--brand-2)) 58%, hsl(var(--brand-3)) 100%);
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scroll-area {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--muted-foreground) / 0.3) transparent;
+  }
+
+  .glass {
+    background-color: hsl(var(--card) / 0.78);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    backdrop-filter: blur(20px) saturate(150%);
+  }
+
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Soft colour wash behind page headers; hue follows whatever is playing. */
+  .ambient {
+    --ambient-hue: 258;
+    background-image: radial-gradient(
+      68rem 30rem at 12% -12%,
+      hsl(var(--ambient-hue) 80% 46% / 0.3),
+      transparent 72%
+    );
+    transition: --ambient-hue 900ms ease;
+  }
+}
+
+/* ------------------------------ range sliders ------------------------------ */
+.melodify-range {
+  --value: 0%;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  width: 100%;
+  height: 20px; /* generous touch target; the visible track is 4px */
+  cursor: pointer;
+}
+.melodify-range:focus {
+  outline: none;
+}
+.melodify-range::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 9999px;
+  background: linear-gradient(
+    to right,
+    var(--range-fill, hsl(var(--foreground))) var(--value),
+    hsl(var(--muted-foreground) / 0.3) var(--value)
+  );
+}
+.melodify-range::-moz-range-track {
+  height: 4px;
+  border-radius: 9999px;
+  background: hsl(var(--muted-foreground) / 0.3);
+}
+.melodify-range::-moz-range-progress {
+  height: 4px;
+  border-radius: 9999px;
+  background: var(--range-fill, hsl(var(--foreground)));
+}
+.melodify-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 12px;
+  width: 12px;
+  margin-top: -4px;
+  border: 0;
+  border-radius: 9999px;
+  background: hsl(var(--foreground));
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+.melodify-range::-moz-range-thumb {
+  height: 12px;
+  width: 12px;
+  border: 0;
+  border-radius: 9999px;
+  background: hsl(var(--foreground));
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+.melodify-range:hover {
+  --range-fill: hsl(var(--primary));
+}
+.melodify-range:hover::-webkit-slider-thumb,
+.melodify-range:focus-visible::-webkit-slider-thumb,
+.melodify-range:active::-webkit-slider-thumb {
+  opacity: 1;
+}
+.melodify-range:hover::-moz-range-thumb,
+.melodify-range:focus-visible::-moz-range-thumb,
+.melodify-range:active::-moz-range-thumb {
+  opacity: 1;
+}
+@media (pointer: coarse) {
+  .melodify-range::-webkit-slider-thumb {
+    opacity: 1;
+    height: 16px;
+    width: 16px;
+    margin-top: -6px;
+  }
+  .melodify-range::-moz-range-thumb {
+    opacity: 1;
+    height: 16px;
+    width: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Floating player dock: a faint glow in the colour of the current track. */
+.dock-glow {
+  --ambient-hue: 258;
+  background-image: radial-gradient(28rem 7rem at 18% 0%, hsl(var(--ambient-hue) 85% 55% / 0.22), transparent 70%);
+  transition: --ambient-hue 900ms ease;
+}
+
+/* Chevron for native <select> elements (appearance is reset in components/ui/input.tsx). */
+.select-arrow {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23a79fc4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  background-size: 1rem;
+}

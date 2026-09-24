@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f7cfe0"/><stop offset=".55" stop-color="#c8b6ff"/><stop offset="1" stop-color="#8f7cff"/></linearGradient>
+<mask id="cres"><rect width="600" height="600" fill="#fff"/><circle cx="330" cy="200" r="88" fill="#000"/></mask></defs>
+<rect width="600" height="600" fill="url(#bg)"/>
+<circle cx="190" cy="380" r="210" fill="#fff" opacity=".28"/>
+<circle cx="420" cy="430" r="170" fill="#ffd9c2" opacity=".55"/>
+<circle cx="300" cy="330" r="110" fill="#6d55f0" opacity=".35"/>
+<circle cx="290" cy="200" r="98" fill="#fffaf0" mask="url(#cres)"/>
+<path d="M470 114 Q470 130 486 130 Q470 130 470 146 Q470 130 454 130 Q470 130 470 114Z" fill="#fff" opacity="0.9"/>
+<path d="M120 140 Q120 150 130 150 Q120 150 120 160 Q120 150 110 150 Q120 150 120 140Z" fill="#fff" opacity="0.8"/>
+<path d="M500 292 Q500 300 508 300 Q500 300 500 308 Q500 300 492 300 Q500 300 500 292Z" fill="#fff" opacity="0.7"/>
+<path d="M90 458 Q90 470 102 470 Q90 470 90 482 Q90 470 78 470 Q90 470 90 458Z" fill="#fff" opacity="0.75"/>
+<path d="M360 501 Q360 510 369 510 Q360 510 360 519 Q360 510 351 510 Q360 510 360 501Z" fill="#fff" opacity="0.7"/>
+</svg>
